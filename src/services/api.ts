@@ -1,7 +1,8 @@
+/// <reference types="vite/client" />
 import { AskQuestionRequest, AskQuestionResponse } from '../types/api';
 
-// 환경 변수에서 API URL을 가져오거나 기본값 사용
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001';
+// 환경 변수에서 API URL을 가져오거나(설정되지 않으면 프록시 사용)
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 const API_TIMEOUT = 300000;
 
 class ApiService {
