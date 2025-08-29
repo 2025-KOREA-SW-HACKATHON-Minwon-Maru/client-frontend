@@ -9,32 +9,26 @@ interface Department {
 
 interface DepartmentCardProps {
   department: Department;
-  [key: string]: any; // 추가 props 허용 (key 포함)
+  [key: string]: any;
 }
 
 export function DepartmentCard({ department }: DepartmentCardProps) {
-  return (
-    <div className="w-full self-stretch max-w-40 p-2 inline-flex flex-col justify-between items-start bg-white dark:bg-neutral-800 rounded-md shadow-sm hover:shadow-md transition-shadow">
-      <div className="self-stretch min-h-12 flex flex-col justify-start items-start overflow-hidden">
-        <div className="self-stretch justify-center text-neutral-900 dark:text-neutral-100 text-sm font-medium leading-tight">
-          {department.name}
+    return (
+      <div className="w-full bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow group duration-200 m-2">
+        <div className="mb-3">
+          <h3 className="text-gray-900 text-base font-medium">
+            {department.name}
+          </h3>
+        </div>
+        
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-8 h-8 bg-blue-50 rounded-full group-hover:bg-blue-100 transition-colors">
+            <Phone className="w-4 h-4 text-blue-600" />
+          </div>
+          <span className="text-gray-600 text-sm font-medium">
+            {department.phone}
+          </span>
         </div>
       </div>
-      <div className="self-stretch inline-flex justify-start items-center">
-        <div className="flex justify-start items-center gap-1">
-          <div className="inline-flex flex-col justify-start items-start">
-            <div className="self-stretch relative rounded-full flex flex-col justify-start items-start overflow-hidden">
-              <div className="w-4 h-4 left-0 top-0 absolute bg-purple-600 rounded-full" />
-              <Phone className="w-4 h-4 max-w-4 relative text-white" />
-            </div>
-          </div>
-          <div className="inline-flex flex-col justify-start items-start overflow-hidden">
-            <div className="justify-center text-neutral-600 dark:text-neutral-400 text-xs font-medium leading-none">
-              {department.phone}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+    );
+  }
