@@ -7,6 +7,7 @@ import apiService from "./services/api";
 import { AskQuestionRequest, AskQuestionResponse } from "./types/api";
 import { DepartmentCard } from "./components/DepartmentCard";
 import { ContextCard } from "./components/ContextCard";
+import ReactMarkdown from 'react-markdown';
 
 export default function App() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -56,7 +57,7 @@ export default function App() {
             <button
               onClick={() => setResponse({
                 success: true,
-                answer: "이 응답은 UI 테스트를 위한 더미 데이터입니다. 실제 API 호출은 하지 않습니다.",
+                answer: "이 **응답은** UI 테스트를 위한 더미 데이터입니다.\n - 실제 *API* 호출은 하지 않습니다.",
                 message: "더미 데이터 테스트",
                 relevantDepartments: [
                   { id: "1", name: "청와대", phone: "02-123-4567" },
@@ -140,7 +141,9 @@ export default function App() {
                           <p className="text-red-500 mb-2">{response.message}</p>
                         )}
                         {response.answer && (
-                          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{response.answer}</p>
+                          <div className="text-gray-700 leading-relaxed max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&>h1]:text-2xl [&>h1]:font-bold [&>h1]:mb-4 [&>h2]:text-xl [&>h2]:font-bold [&>h2]:mb-3 [&>h3]:text-lg [&>h3]:font-semibold [&>h3]:mb-2 [&>p]:mb-3 [&>ul]:mb-3 [&>ol]:mb-3 [&>li]:mb-1 [&>strong]:font-bold [&>em]:italic [&>code]:bg-gray-100 [&>code]:px-1 [&>code]:py-0.5 [&>code]:rounded [&>code]:text-sm [&>pre]:bg-gray-100 [&>pre]:p-3 [&>pre]:rounded [&>pre]:overflow-x-auto [&>blockquote]:border-l-4 [&>blockquote]:border-gray-300 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-gray-600">
+                            <ReactMarkdown>{response.answer}</ReactMarkdown>
+                          </div>
                         )}
                       </CardTabPanel>
                     )}
