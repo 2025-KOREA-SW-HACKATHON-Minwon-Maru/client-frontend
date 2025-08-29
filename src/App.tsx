@@ -96,11 +96,13 @@ export default function App() {
                       </div>
 
                       {/* Answer with tabs */}
-                      <CardTabs defaultValue={getActiveTab(message.id)}>
+                      <CardTabs 
+                        value={getActiveTab(message.id)} 
+                        onValueChange={(value) => setActiveTab(message.id, value as "answer" | "departments" | "context")}
+                      >
                         <CardTabList className="mb-4 justify-start">
                           <CardTab
                             value="answer"
-                            onClick={() => setActiveTab(message.id, "answer")}
                             className={`px-4 py-2 transition-all font-medium relative ${
                               getActiveTab(message.id) === "answer"
                                 ? "text-black border-b-2 border-black border-solid"
@@ -111,7 +113,6 @@ export default function App() {
                           </CardTab>
                           <CardTab
                             value="departments"
-                            onClick={() => setActiveTab(message.id, "departments")}
                             disabled={!message.relevantDepartments || message.relevantDepartments.length === 0}
                             className={`px-4 py-2 transition-all font-medium relative ${
                               getActiveTab(message.id) === "departments"
@@ -130,7 +131,6 @@ export default function App() {
                           </CardTab>
                           <CardTab
                             value="context"
-                            onClick={() => setActiveTab(message.id, "context")}
                             disabled={!message.context}
                             className={`px-4 py-2 transition-all font-medium relative ${
                               getActiveTab(message.id) === "context"

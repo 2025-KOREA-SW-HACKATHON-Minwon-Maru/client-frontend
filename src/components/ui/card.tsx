@@ -97,7 +97,14 @@ interface CardTabsProps extends React.ComponentProps<"div"> {
   className?: string;
 }
 
-function CardTabs({ className, defaultValue, value, onValueChange, ...props }: CardTabsProps) {
+interface CardTabsContextType {
+  selectedTab: string;
+  onTabChange: (value: string) => void;
+}
+
+const CardTabsContext = React.createContext<CardTabsContextType | undefined>(undefined);
+
+function CardTabs({ className, defaultValue, value, onValueChange, children, ...props }: CardTabsProps) {
   const [selectedTab, setSelectedTab] = React.useState(value || defaultValue || "");
 
   const handleTabChange = (tabValue: string) => {
@@ -111,13 +118,22 @@ function CardTabs({ className, defaultValue, value, onValueChange, ...props }: C
     }
   }, [value]);
 
+  const contextValue = React.useMemo(() => ({
+    selectedTab,
+    onTabChange: handleTabChange
+  }), [selectedTab]);
+
   return (
-    <div
-      data-slot="card-tabs"
-      className={cn("", className)}
-      data-selected-tab={selectedTab}
-      {...props}
-    />
+    <CardTabsContext.Provider value={contextValue}>
+      <div
+        data-slot="card-tabs"
+        className={cn("", className)}
+        data-selected-tab={selectedTab}
+        {...props}
+      >
+        {children}
+      </div>
+    </CardTabsContext.Provider>
   );
 }
 
@@ -135,12 +151,23 @@ function CardTabList({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CardTab({ className, value, children, disabled, onClick, ...props }: CardTabProps) {
+  const context = React.useContext(CardTabsContext);
+  const isActive = context?.selectedTab === value;
+
+  const handleClick = () => {
+    if (!disabled && context) {
+      context.onTabChange(value);
+    }
+    onClick?.();
+  };
+
   return (
     <button
       data-slot="card-tab"
       data-value={value}
+      data-state={isActive ? "active" : "inactive"}
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
       className={cn(
         "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         className,
