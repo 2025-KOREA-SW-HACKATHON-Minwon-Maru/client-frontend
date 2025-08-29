@@ -52,7 +52,7 @@ export default function App() {
             />
           </div>
 
-          {/* UI 테스트 버튼 */}
+          {/* UI 테스트 버튼 - 주석처리됨
           <div className="mb-4 text-center">
             <button
               onClick={() => setResponse({
@@ -71,6 +71,7 @@ export default function App() {
               🎨 UI 테스트 (더미 데이터)
             </button>
           </div>
+          */}
           
           {/* Response area with tabs */}
           {response && (
